@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Azure Web App - clouddev-backend
+name: Build and deploy Node.js app to Azure Web App - backend2-demo
 
 on:
   push:
@@ -63,6 +63,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "clouddev-backend"
+          app-name: "backend2-demo"
           slot-name: "Production"
           package: .
