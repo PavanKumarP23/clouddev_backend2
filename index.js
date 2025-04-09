@@ -6,30 +6,45 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MySQL connection config
-// triggering azure deployment
+// ✅ MySQL connection config for Azure MySQL Flexible Server
 const db = mysql.createConnection({
   host: 'backend2.mysql.database.azure.com',
-  user: 'pavandb@backend2',
+  user: 'pavandb@backend2', // ✅ Correct format
   password: 'Pavandb2025',
   database: 'studentdb',
   port: 3306,
   ssl: {
-    rejectUnauthorized:true
+    rejectUnauthorized: true
   }
 });
 
+// ✅ Graceful connection handling
 db.connect(err => {
-  if (err) throw err;
-  console.log('Connected to MySQL database');
+  if (err) {
+    console.error('❌ Failed to connect to MySQL:', err.message);
+  } else {
+    console.log('✅ Connected to MySQL database');
+  }
 });
 
+// ✅ Health check route
+app.get('/', (req, res) => {
+  res.send('🚀 Server is running!');
+});
+
+// ✅ Main route to get all students
 app.get('/api/students', (req, res) => {
   db.query('SELECT * FROM students', (err, results) => {
-    if (err) return res.status(500).send(err);
+    if (err) {
+      console.error('❌ Error fetching students:', err.message);
+      return res.status(500).send('Database query error');
+    }
     res.json(results);
   });
 });
 
+// ✅ Use Azure-assigned port or fallback to 8080
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`✅ Backend running on http://localhost:${PORT}`);
+});
