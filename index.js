@@ -8,8 +8,8 @@ app.use(express.json());
 
 // ✅ MySQL connection config for Azure MySQL Flexible Server
 const db = mysql.createConnection({
-  host: 'backend2.mysql.database.azure.com',
-  user: 'pavandb@backend2', // ✅ Correct format
+  host: 'studentdb-dem.mysql.database.azure.com',
+  user: 'mysqlpavan@studentdb-dem', // ✅ Correct format
   password: 'Pavandb2025',
   database: 'studentdb',
   port: 3306,
